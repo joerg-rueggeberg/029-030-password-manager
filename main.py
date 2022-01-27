@@ -1,10 +1,33 @@
 from tkinter import *
 from tkinter import messagebox
+from random import randint, choice, shuffle
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate():
-    pass
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+               'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+               'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+
+    nr_letters = randint(8, 10)
+    nr_symbols = randint(2, 4)
+    nr_numbers = randint(2, 4)
+
+    password_list_letters = [choice(letters) for i in range(nr_letters)]
+    password_list_numbers = [choice(numbers) for i in range(nr_numbers)]
+    password_list_symbols = [choice(symbols) for i in range(nr_symbols)]
+    password_list = password_list_letters + password_list_numbers + password_list_symbols
+
+    shuffle(password_list)
+
+    password_gen = ""
+    for char in password_list:
+        password_gen += char
+
+    entry_password.delete(0, END)
+    entry_password.insert(0, password_gen)
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
@@ -16,7 +39,6 @@ def add_pass():
     if len(data_website) == 0 or len(data_username) == 0 or len(data_password) == 0:
         messagebox.showwarning(title="Error - Empty fields", message="Please fill out all required fields!")
     else:
-        print("nicht leer")
         confirm = messagebox.askokcancel(title=data_website, message=f"These are the details entered: \n\n"
                                                                      f"Username: {data_username}\n"
                                                                      f"Password: {data_password}\n\n"
