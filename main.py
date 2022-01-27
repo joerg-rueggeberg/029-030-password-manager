@@ -54,7 +54,7 @@ def add_pass():
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
-window.title("Sinclair - Password Manager")
+window.title("Jörg - Password Manager")
 window.config(padx=30, pady=30, background="white")
 
 canvas = Canvas(width=200, height=200, bg="white", highlightthickness=0)
