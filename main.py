@@ -61,12 +61,10 @@ canvas.create_image(100, 100, image=logo_img)
 canvas.grid(column=1, row=0)
 
 # LABELS
-num_l = Label(text="# letters: ", background="white", pady=5)
-num_n = Label(text="# numbers: ", background="white", pady=5)
-num_s = Label(text="# symbols: ", background="white", pady=5)
 website = Label(text="Website: ", background="white")
 username = Label(text="Username: ", background="white")
 password = Label(text="Password: ", background="white")
+
 website.grid(column=0, row=1, sticky="w")
 username.grid(column=0, row=2, sticky="w")
 password.grid(column=0, row=3, sticky="w")
