@@ -21,10 +21,7 @@ def generate():
     password_list = password_list_letters + password_list_numbers + password_list_symbols
 
     shuffle(password_list)
-
-    password_gen = ""
-    for char in password_list:
-        password_gen += char
+    password_gen = "".join(password_list)
 
     entry_password.delete(0, END)
     entry_password.insert(0, password_gen)
@@ -64,6 +61,9 @@ canvas.create_image(100, 100, image=logo_img)
 canvas.grid(column=1, row=0)
 
 # LABELS
+num_l = Label(text="# letters: ", background="white", pady=5)
+num_n = Label(text="# numbers: ", background="white", pady=5)
+num_s = Label(text="# symbols: ", background="white", pady=5)
 website = Label(text="Website: ", background="white")
 username = Label(text="Username: ", background="white")
 password = Label(text="Password: ", background="white")
