@@ -31,23 +31,25 @@ def generate():
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def add_pass():
-    data_website = entry_website.get()
+    data_website_title = entry_website_title.get()
+    data_website_url = entry_website_url.get()
     data_username = entry_username.get()
     data_password = entry_password.get()
 
-    if len(data_website) == 0 or len(data_username) == 0 or len(data_password) == 0:
+    if len(data_website_title) == 0 or len(data_username) == 0 or len(data_password) == 0 or len(data_website_url) == 0:
         messagebox.showwarning(title="Error - Empty fields", message="Please fill out all required fields!")
     else:
-        confirm = messagebox.askokcancel(title=data_website, message=f"These are the details entered: \n\n"
+        confirm = messagebox.askokcancel(title=data_website_title, message=f"These are the details entered: \n\n"
                                                                      f"Username: {data_username}\n"
                                                                      f"Password: {data_password}\n\n"
                                                                      f"Do you want to save these information?")
         if confirm:
             with open("data.txt", "a") as f:
-                f.write(f"{data_website}, {data_username}, {data_password}\n")
+                f.write(f"{data_website_title}, {data_website_url}, {data_username}, {data_password}\n")
 
-            entry_website.delete(0, END)
-            entry_website.insert(0, string="https://www.")
+            entry_website_url.delete(0, END)
+            entry_website_title.delete(0, END)
+            entry_website_title.insert(0, string="https://www.")
             entry_username.delete(0, END)
             entry_password.delete(0, END)
 
@@ -63,31 +65,40 @@ canvas.create_image(100, 100, image=logo_img)
 canvas.grid(column=1, row=0)
 
 # LABELS
-website = Label(text="Website: ", background="white")
+website_title = Label(text="Website Title: ", background="white")
+website_url = Label(text="Website URL: ", background="white")
 username = Label(text="Username: ", background="white")
 password = Label(text="Password: ", background="white")
 
-website.grid(column=0, row=1, sticky="w")
-username.grid(column=0, row=2, sticky="w")
-password.grid(column=0, row=3, sticky="w")
+website_title.grid(column=0, row=1, sticky="w")
+website_url.grid(column=0, row=2, sticky="w")
+username.grid(column=0, row=3, sticky="w")
+password.grid(column=0, row=4, sticky="w")
 
 # INPUTS
-entry_website = Entry()
-entry_website.insert(END, string="https://www.")
-entry_website.focus()
-entry_website.grid(column=1, row=1, columnspan=2, sticky="ew")
+entry_website_title = Entry()
+entry_website_title.focus()
+entry_website_title.grid(column=1, row=1, columnspan=2, sticky="ew")
+
+entry_website_url = Entry()
+entry_website_url.insert(END, string="https://www.")
+entry_website_url.focus()
+entry_website_url.grid(column=1, row=2, columnspan=2, sticky="ew")
 
 entry_username = Entry()
-entry_username.grid(column=1, row=2, columnspan=2, sticky="ew")
+entry_username.grid(column=1, row=3, columnspan=2, sticky="ew")
 
 entry_password = Entry()
-entry_password.grid(column=1, row=3, sticky="ew")
+entry_password.grid(column=1, row=4, sticky="ew")
 
-generate_pass = Button(text="Generate Password", command=generate)
-generate_pass.grid(column=2, row=3, sticky="ew")
+# BUTTONS
+generate_pass = Button(text="Generate", command=generate)
+generate_pass.grid(column=2, row=4, sticky="ew")
 
-# calls action() when pressed
-add = Button(text="Add", command=add_pass, width=34)
-add.grid(column=1, row=4, columnspan=2, sticky="ew")
+add = Button(text="Add", command=add_pass)
+add.grid(column=1, row=5, columnspan=2, sticky="ew")
+
+search = Button(text="Search")
+search.grid(column=2, row=1, sticky="ew")
 
 window.mainloop()
