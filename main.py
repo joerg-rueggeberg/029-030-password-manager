@@ -17,9 +17,9 @@ def generate():
     nr_symbols = randint(2, 4)
     nr_numbers = randint(2, 4)
 
-    password_list_letters = [choice(letters) for i in range(nr_letters)]
-    password_list_numbers = [choice(numbers) for i in range(nr_numbers)]
-    password_list_symbols = [choice(symbols) for i in range(nr_symbols)]
+    password_list_letters = [choice(letters) for _ in range(nr_letters)]
+    password_list_numbers = [choice(numbers) for _ in range(nr_numbers)]
+    password_list_symbols = [choice(symbols) for _ in range(nr_symbols)]
     password_list = password_list_letters + password_list_numbers + password_list_symbols
 
     shuffle(password_list)
