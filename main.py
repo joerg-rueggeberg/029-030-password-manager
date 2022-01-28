@@ -73,6 +73,26 @@ def add_pass():
             entry_password.delete(0, END)
 
 
+# ---------------------------- SEARCH PASSWORD ------------------------------- #
+def search_db():
+    search_title = entry_website_title.get().title()
+
+    with open("data.json", "r") as f:
+        data = json.load(f)
+
+    if search_title in data:
+        print("drin")
+        messagebox.showinfo(title="Password found!", message=f"Your infos:\n\n"
+                                                             f"Website Title: '{search_title}'\n"
+                                                             f"Website URL: '{data[search_title]['Url']}'\n"
+                                                             f"Username: '{data[search_title]['Username']}'\n"
+                                                             f"Password: '{data[search_title]['Password']}'\n\n"
+                                                             f"Copied your password to the clipboard.")
+        pyperclip.copy(data[search_title]['Password'])
+    else:
+        messagebox.showinfo("Password not found!", message=f"There is no entry with the title: {search_title}")
+
+
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("Jörg - Password Manager")
@@ -117,7 +137,7 @@ generate_pass.grid(column=2, row=4, sticky="ew")
 add = Button(text="Add", command=add_pass)
 add.grid(column=1, row=5, columnspan=2, sticky="ew")
 
-search = Button(text="Search")
+search = Button(text="Search", command=search_db)
 search.grid(column=2, row=1, sticky="ew")
 
 window.mainloop()
