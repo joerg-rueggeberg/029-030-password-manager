@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from random import randint, choice, shuffle
+import json
 import pyperclip
 
 
@@ -10,7 +11,7 @@ def generate():
                'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-    symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+    symbols = ['!', '#', '$', '%', '&', '*', '+']
 
     nr_letters = randint(8, 10)
     nr_symbols = randint(2, 4)
@@ -36,20 +37,38 @@ def add_pass():
     data_username = entry_username.get()
     data_password = entry_password.get()
 
+    new_data = {
+        data_website_title: {
+            "Url": data_website_url,
+            "Username": data_username,
+            "Password": data_password,
+        }
+    }
+
     if len(data_website_title) == 0 or len(data_username) == 0 or len(data_password) == 0 or len(data_website_url) == 0:
         messagebox.showwarning(title="Error - Empty fields", message="Please fill out all required fields!")
     else:
         confirm = messagebox.askokcancel(title=data_website_title, message=f"These are the details entered: \n\n"
-                                                                     f"Username: {data_username}\n"
-                                                                     f"Password: {data_password}\n\n"
-                                                                     f"Do you want to save these information?")
+                                                                           f"Username: {data_website_url}\n"
+                                                                           f"Username: {data_username}\n"
+                                                                           f"Password: {data_password}\n\n"
+                                                                           f"Do you want to save these information?")
         if confirm:
-            with open("data.txt", "a") as f:
-                f.write(f"{data_website_title}, {data_website_url}, {data_username}, {data_password}\n")
+            try:
+                with open("data.json", "r") as f:
+                    db = json.load(f)
+                    db.update(new_data)
+
+                with open("data.json", "w") as f:
+                    json.dump(db, f, indent=4)
+
+            except FileNotFoundError:
+                with open("data.json", "w") as f:
+                    json.dump(new_data, f, indent=4)
 
             entry_website_url.delete(0, END)
             entry_website_title.delete(0, END)
-            entry_website_title.insert(0, string="https://www.")
+            entry_website_url.insert(0, string="https://www.")
             entry_username.delete(0, END)
             entry_password.delete(0, END)
 
